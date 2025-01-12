@@ -25,9 +25,5 @@ jobs:
         # pip install -r requirements.txt
 
     - name: Run the template generation script
-      env:
-        PROJECT_NAME: "my_generated_project"
-        VERSION: "1.0.0"
-        REQUIREMENTS: "numpy,requests"  # Add any dependencies here
       run: |
-        python tempip.py
+        python tempip.py my_generated_project  # This passes the project name to the script
