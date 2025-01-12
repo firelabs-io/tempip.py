@@ -1,3 +1,4 @@
+## generates basic template ##
 import sys
 import os
 
@@ -26,7 +27,6 @@ setup(
 """
     with open(f"{project}/setup.py", 'w') as file:
         file.write(setup_content)
-
 if __name__ == '__main__':
     if os.getenv("CI") == "true":
         project = "default_project_name" 
