@@ -2,8 +2,12 @@ import sys
 import os
 
 def setupy(project):
-    version = input("Version> ")
-    require = input("Requires(e.g numpy, separate by ',')> ")
+    if os.getenv("CI") == "true":
+        version = "1.0.0" 
+        require = "numpy" 
+    else:
+        version = input("Version> ")
+        require = input("Requires (e.g numpy, separate by ',')> ")
     dependencies = [dep.strip() for dep in require.split(',')]
     setup_content = f"""
 from setuptools import setup, find_packages
@@ -22,8 +26,12 @@ setup(
 """
     with open(f"{project}/setup.py", 'w') as file:
         file.write(setup_content)
+
 if __name__ == '__main__':
-    project = sys.argv[1]
+    if os.getenv("CI") == "true":
+        project = "default_project_name" 
+    else:
+        project = sys.argv[1] if len(sys.argv) > 1 else input("Enter project name> ")
     os.makedirs(project, exist_ok=True)
     os.makedirs(f"{project}/{project}", exist_ok=True)
     os.makedirs(f"{project}/test", exist_ok=True)
@@ -33,4 +41,4 @@ if __name__ == '__main__':
     with open(f'{project}/README.md', 'w') as file: pass
     with open(f"{project}/LICENSE", 'w') as f: pass
     print(f"GENERATED TEMPLATE AT '{project}/'")
-    print("edit readme.md and license as you please")
+    print("Edit README.md and LICENSE as you please.")
